@@ -1,0 +1,10 @@
+{% extends "main.html" %}
+
+{% block title %}{{ country }} Emission Detail{% endblock %}
+
+{% block content %}
+<h1>The emissions of {{ country }} from 1990 to 2020</h1>
+<img src="{{ image_file }}" alt="图表" width="800">
+<a href="/countries">← Back to the List</a>
+
+{% endblock %}

@@ -46,3 +46,8 @@ git clone https://github.com/Thorki-Su/CS551P_Assignment_3.git
 This will download all the files into your codio as a new folder '*CS551P_Assignment_3*'. To make edits and commits easier, please move all files out of the folder.
 
 # Usage of Templates
+'404.html' is for the 404 error.   
+'500.html' is for the 500 error.   
+'main.html' is the main template for other pages.   
+'homepage.html' is for the homepage.   
+'country.html' is for the country detail pages.   

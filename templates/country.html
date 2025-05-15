@@ -14,7 +14,11 @@
     </ul>
 </div>
 <div id="chart">
-    <img src="{{ image_file }}" alt="Emission Chart" width="800">
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% else %}
+        <img src="{{ image_file }}" alt="Emission Chart" width="800">
+    {% endif %}
     <p><a href="/">← Back to the Homepage</a></p>
 </div>
 

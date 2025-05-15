@@ -7,6 +7,8 @@ This `README.md` will show the files about CS551P Assignment 3.
 You can visit the page by this url: https://cs551p-assignment-3.onrender.com
 
 # How to run (local version on Codio)
+Firstly please go the bottom of emissions.py and change the version of run().
+Then use this command:
 ```bash
 source .venv/bin/activate
 python emissions.py

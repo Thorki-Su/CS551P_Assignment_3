@@ -1,7 +1,5 @@
 import unittest
-from flask import Flask
-from models import db, Country, EmissionData
-from emissions import app
+from emissions import app, db, Country, EmissionData
 
 class EmissionAppTestCase(unittest.TestCase):
     def setUp(self):
@@ -11,7 +9,6 @@ class EmissionAppTestCase(unittest.TestCase):
         self.app = app.test_client()
 
         with app.app_context():
-            db.init_app(app)
             db.create_all()
             country = Country(name="Testland", code="TL", region="Nowhere", income_group="High income")
             db.session.add(country)
@@ -36,11 +33,13 @@ class EmissionAppTestCase(unittest.TestCase):
             country = Country.query.filter_by(name="Testland").first()
             response = self.app.get(f'/country/{country.id}')
             self.assertEqual(response.status_code, 200)
-            self.assertIn(b'CO', response.data)
+            self.assertIn(b'Testland', response.data)
+            self.assertIn(b'TL', response.data)
 
     def test_404(self):
         response = self.app.get('/country/9999')
         self.assertEqual(response.status_code, 404)
+        self.assertIn(b'The Page does not exist', response.data)
 
 if __name__ == '__main__':
     unittest.main()

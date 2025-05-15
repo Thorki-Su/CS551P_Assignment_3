@@ -29,7 +29,15 @@ def country_list():
 
 @app.route('/country/<country_name>')
 def country_detail(country_name):
+    # country_data = df[df['Country Name'] == country_name].sort_values(by='Year')
+    info_row = df_raw[df_raw['Country Name'] == country_name].iloc[0]
+    country_code = info_row['Country Code']
+    region = info_row['Region']
+    income_group = info_row['IncomeGroup']
+
     country_data = df[df['Country Name'] == country_name].sort_values(by='Year')
+    years = country_data['Year'].tolist()
+    emissions = country_data['Emissions'].tolist()
 
     safe_name = country_name.replace(" ", "_")
     plot_path = os.path.join(PLOT_DIR, f"{safe_name}.png")
@@ -37,15 +45,19 @@ def country_detail(country_name):
     if not os.path.exists(plot_path):
         plt.figure(figsize=(10, 5))
         plt.plot(country_data['Year'], country_data['Emissions'], marker='o')
-        plt.title(f"{country_name} - CO₂ Emissions (1990–2020)")
+        plt.title(f"{country_name} - CO₂ Emissions (1990-2020)")
         plt.xlabel("Year")
-        plt.ylabel("Emissions")
+        plt.ylabel("Emissions (metric tons per capita)")
         plt.tight_layout()
         plt.savefig(plot_path)
         plt.close()
 
-    return render_template('country.html', country=country_name, image_file=f"/{plot_path}")
-
+    return render_template("country.html",
+                        country=country_name,
+                        image_file=f"/{plot_path}",
+                        country_code=country_code,
+                        region=region,
+                        income_group=income_group)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

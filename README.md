@@ -3,6 +3,9 @@
 ### What is this?
 This `README.md` will show the files about CS551P Assignment 3.
 
+# How to run (on Render)
+You can visit the page by this url: https://cs551p-assignment-3.onrender.com
+
 # How to run (local version on Codio)
 ```bash
 source .venv/bin/activate
@@ -52,5 +55,5 @@ This will download all the files into your codio as a new folder '*CS551P_Assign
 'homepage.html' is for the homepage.   
 'country.html' is for the country detail pages.   
 
-#Name in the git log
+# Name in the git log
 'Thorki Su' is the username of Peiheng Su in github.

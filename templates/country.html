@@ -1,13 +1,13 @@
 {% extends "main.html" %}
 
-{% block title %}{{ country }} Emission Detail{% endblock %}
+{% block title %}{{ country.name }} Emission Detail{% endblock %}
 
 {% block content %}
-<h1>The emissions of {{ country }} from 1990 to 2020</h1>
+<h1>The emissions of {{ country.name }} from 1990 to 2020</h1>
 <ul>
-  <li><strong>Country Code:</strong> {{ country_code }}</li>
-  <li><strong>Region:</strong> {{ region }}</li>
-  <li><strong>Income Group:</strong> {{ income_group }}</li>
+  <li><strong>Country Code:</strong> {{ country.code }}</li>
+  <li><strong>Region:</strong> {{ country.region }}</li>
+  <li><strong>Income Group:</strong> {{ country.income_group }}</li>
 </ul>
 <img src="{{ image_file }}" alt="Emission Chart" width="800">
 <a href="/countries">← Back to the List</a>

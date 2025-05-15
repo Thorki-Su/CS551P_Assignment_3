@@ -6,7 +6,7 @@
 <h1>Country List</h1>
 <ul>
   {% for country in countries %}
-    <li><a href="{{ url_for('country_detail', country_name=country) }}">{{ country }}</a></li>
+    <li><a href="{{ url_for('country_detail', country_id=country.id) }}">{{ country.name }}</a></li>
   {% endfor %}
 </ul>
 {% endblock %}

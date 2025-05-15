@@ -1,21 +1,14 @@
 from flask import Flask, render_template
-import pandas as pd
-import matplotlib.pyplot as plt
+from models import db, Country, EmissionData
 import os
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
-DATA_FILE = 'data/data_upload.xlsx'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///emissions.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
 PLOT_DIR = 'static/plots'
-
-df_raw = pd.read_excel(DATA_FILE)
-df = df_raw.melt(
-    id_vars=["Country Name"],
-    value_vars=[str(year) for year in range(1990, 2021)],
-    var_name="Year",
-    value_name="Emissions"
-)
-df['Year'] = df['Year'].astype(int)
-
 os.makedirs(PLOT_DIR, exist_ok=True)
 
 @app.route('/')
@@ -24,40 +17,30 @@ def home():
 
 @app.route('/countries')
 def country_list():
-    countries = sorted(df['Country Name'].unique())
+    countries = Country.query.order_by(Country.name).all()
     return render_template('countries.html', countries=countries)
 
-@app.route('/country/<country_name>')
-def country_detail(country_name):
-    # country_data = df[df['Country Name'] == country_name].sort_values(by='Year')
-    info_row = df_raw[df_raw['Country Name'] == country_name].iloc[0]
-    country_code = info_row['Country Code']
-    region = info_row['Region']
-    income_group = info_row['IncomeGroup']
+@app.route('/country/<int:country_id>')
+def country_detail(country_id):
+    country = Country.query.get_or_404(country_id)
+    emissions = EmissionData.query.filter_by(country_id=country.id).order_by(EmissionData.year).all()
+    years = [e.year for e in emissions]
+    values = [e.emission for e in emissions]
 
-    country_data = df[df['Country Name'] == country_name].sort_values(by='Year')
-    years = country_data['Year'].tolist()
-    emissions = country_data['Emissions'].tolist()
-
-    safe_name = country_name.replace(" ", "_")
-    plot_path = os.path.join(PLOT_DIR, f"{safe_name}.png")
-
+    plot_path = os.path.join(PLOT_DIR, f"{country.name.replace(' ', '_')}.png")
     if not os.path.exists(plot_path):
         plt.figure(figsize=(10, 5))
-        plt.plot(country_data['Year'], country_data['Emissions'], marker='o')
-        plt.title(f"{country_name} - CO₂ Emissions (1990-2020)")
+        plt.plot(years, values, marker='o')
+        plt.title(f"{country.name} CO₂ Emissions")
         plt.xlabel("Year")
-        plt.ylabel("Emissions (metric tons per capita)")
+        plt.ylabel("Emissions")
         plt.tight_layout()
         plt.savefig(plot_path)
         plt.close()
 
     return render_template("country.html",
-                        country=country_name,
-                        image_file=f"/{plot_path}",
-                        country_code=country_code,
-                        region=region,
-                        income_group=income_group)
+                           country=country,
+                           image_file=f"/{plot_path}")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

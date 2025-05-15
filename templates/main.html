@@ -2,12 +2,23 @@
 <html>
 <head>
     <title>{% block title %}Default Title{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <div id="container">
+        <div id="sidebar">
+            <h2>Country List</h2>
+            <ul>
+            {% for country in countries %}
+                <li><a href="{{ url_for('country_detail', country_id=country.id) }}">{{ country.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div id="content">
+            {% block content %}
+                <p>default content</p>
+            {% endblock %}
+        </div>
+    </div>
 </body>
 </html>

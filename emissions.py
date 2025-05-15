@@ -13,7 +13,8 @@ os.makedirs(PLOT_DIR, exist_ok=True)
 
 @app.route('/')
 def home():
-    return render_template('homepage.html')
+    countries = Country.query.order_by(Country.name).all()
+    return render_template('homepage.html', countries=countries)
 
 @app.route('/countries')
 def country_list():
@@ -22,6 +23,7 @@ def country_list():
 
 @app.route('/country/<int:country_id>')
 def country_detail(country_id):
+    countries = Country.query.order_by(Country.name).all()
     country = Country.query.get_or_404(country_id)
     emissions = EmissionData.query.filter_by(country_id=country.id).order_by(EmissionData.year).all()
     years = [e.year for e in emissions]
@@ -33,12 +35,13 @@ def country_detail(country_id):
         plt.plot(years, values, marker='o')
         plt.title(f"{country.name} CO₂ Emissions")
         plt.xlabel("Year")
-        plt.ylabel("Emissions")
+        plt.ylabel("Emissions (metric tons per capita)")
         plt.tight_layout()
         plt.savefig(plot_path)
         plt.close()
 
     return render_template("country.html",
+                           countries=countries,
                            country=country,
                            image_file=f"/{plot_path}")
 

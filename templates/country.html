@@ -3,13 +3,19 @@
 {% block title %}{{ country.name }} Emission Detail{% endblock %}
 
 {% block content %}
-<h1>The emissions of {{ country.name }} from 1990 to 2020</h1>
-<ul>
-  <li><strong>Country Code:</strong> {{ country.code }}</li>
-  <li><strong>Region:</strong> {{ country.region }}</li>
-  <li><strong>Income Group:</strong> {{ country.income_group }}</li>
-</ul>
-<img src="{{ image_file }}" alt="Emission Chart" width="800">
-<a href="/countries">← Back to the List</a>
+<div id="country_info">
+    <h1>The emissions of <span>{{ country.name }}</span> from 1990 to 2020</h1>
+    <h3>Country information</h3>
+    <ul>
+        <li><strong>Country Name:</strong> {{ country.name }}</li>
+        <li><strong>Country Code:</strong> {{ country.code }}</li>
+        <li><strong>Region:</strong> {{ country.region }}</li>
+        <li><strong>Income Group:</strong> {{ country.income_group }}</li>
+    </ul>
+</div>
+<div id="chart">
+    <img src="{{ image_file }}" alt="Emission Chart" width="800">
+    <p><a href="/">← Back to the Homepage</a></p>
+</div>
 
 {% endblock %}

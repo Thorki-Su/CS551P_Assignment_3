@@ -54,6 +54,3 @@ This will download all the files into your codio as a new folder '*CS551P_Assign
 'main.html' is the main template for other pages.   
 'homepage.html' is for the homepage.   
 'country.html' is for the country detail pages.   
-
-# Name in the git log
-'Thorki Su' is the username of Peiheng Su in github.

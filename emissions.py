@@ -2,6 +2,7 @@ from flask import Flask, render_template, abort
 from models import db, Country, EmissionData
 import os
 import matplotlib.pyplot as plt
+import pandas as pd
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///emissions.db'
@@ -58,6 +59,33 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+@app.before_first_request
+def init_db():
+    db.create_all()
+
+    if Country.query.first() is None:
+        print("No countries found — loading initial data...")
+        df = pd.read_excel('data/data_upload.xlsx')
+        for _, row in df.iterrows():
+            country = Country(
+                name=row['Country Name'],
+                code=row['Country Code'],
+                region=row['Region'],
+                income_group=row['IncomeGroup']
+            )
+            db.session.add(country)
+            db.session.flush()
+
+            for year in range(1990, 2021):
+                value = row.get(str(year))
+                if pd.notna(value):
+                    data = EmissionData(year=year, emission=value, country_id=country.id)
+                    db.session.add(data)
+
+        db.session.commit()
+        print("Data uploaded successfully.")
+
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=5000, debug=True)  # local version

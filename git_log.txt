@@ -1,0 +1,10 @@
+dcc96c6 | PEIHENG SU | 2025-05-16 19:48:46 +0000 | Update the Readme
+1f3f8e9 | Thorki Su | 2025-05-16 20:46:32 +0100 | Fix database on Render
+ec50892 | PEIHENG SU | 2025-05-15 20:52:38 +0000 | Finish deploying and add thr url
+85da859 | PEIHENG SU | 2025-05-15 20:40:13 +0000 | Prepare for deployment
+47eb439 | PEIHENG SU | 2025-05-15 20:32:24 +0000 | delete the list page and add error control
+3d7fad4 | PEIHENG SU | 2025-05-15 20:19:28 +0000 | add style for all pages
+a8ef4c2 | PEIHENG SU | 2025-05-15 16:19:20 +0000 | Update the database
+f6468b7 | PEIHENG SU | 2025-05-15 15:11:50 +0000 | Add other information in the detail page
+2f40739 | PEIHENG SU | 2025-05-15 14:55:33 +0000 | Upload data and Show data with line chart
+3427dd7 | PEIHENG SU | 2025-05-15 14:12:22 +0000 | Very basic flask framework

@@ -86,7 +86,6 @@ def init_db():
         db.session.commit()
         print("Data uploaded successfully.")
 
-
-if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000, debug=True)  # local version
-    app.run() # cloud  version
+# If you want to run the local version, please recover this!!!
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000, debug=True)  

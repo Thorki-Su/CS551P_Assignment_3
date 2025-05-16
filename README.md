@@ -5,6 +5,7 @@ This `README.md` will show the files about CS551P Assignment 3.
 
 # How to run (on Render)
 You can visit the page by this url: https://cs551p-assignment-3.onrender.com
+Depending on Render's policy, it may take a few minutes to load
 
 # How to run (local version on Codio)
 ```bash
